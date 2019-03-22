@@ -1,4 +1,6 @@
-## Captive Portal on Rapsberry Pi
+## Captive Portal on Rapsberry Pi with WordPress
+
+# CHANGE DB PASSWORD AND SALTS IN wp-config.php
 
 Below script will create an open wifi network and when you connect to it, it will automatically open the browser. Make sure you don't have the internet on your device you are connecting it from. This is originally desinged to only provide local website from the RPI.
 
