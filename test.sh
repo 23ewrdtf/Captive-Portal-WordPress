@@ -9,4 +9,5 @@ echo "┌───────────────────────�
 echo "|Configuring MySQL, Pa$$w0rd123 is temporary,"
 echo "|CHANGE BEFORE RUN THIS SCRIPT"
 echo "└─────────────────────────────────────────"
-mysql -e "create database wordpress_db;GRANT ALL PRIVILEGES ON wordpress_db.* TO wordpress_user@$mysqlhost IDENTIFIED BY 'Pa66w0rd123';FLUSH PRIVILEGES;"
+dbsetup="create database wordpress_db;GRANT ALL PRIVILEGES ON wordpress_db.* TO wordpress_user@$mysqlhost IDENTIFIED BY 'Pa66w0rd123';FLUSH PRIVILEGES;"
+mysql -e "$dbsetup"
