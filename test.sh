@@ -7,10 +7,7 @@ curl -o /var/www/html/latest.tar.gz -O https://wordpress.org/latest.tar.gz
 tar -C /var/www/html/ -zxvf /var/www/html/latest.tar.gz
 rm -rf /var/www/html/latest.tar.gz
 chown -R www-data /var/www/html/wordpress
-mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
-perl -pi -e "s'database_name_here'"wordpress_db"'g" /var/www/html/wordpress/wp-config.php
-perl -pi -e "s'username_here'"wordpress_user"'g" /var/www/html/wordpress/wp-config.php
-perl -pi -e "s'password_here'"Pa66w0rd123"'g" /var/www/html/wordpress/wp-config.php
-perl -pi -e "s/\'wp_\'/\'wp_\'/g" /var/www/html/wordpress/wp-config.php
+rm -rf /var/www/html/wordpress/wp-config-sample.php
 mkdir /var/www/html/wordpress/wp-content/uploads
 chmod 775 /var/www/html/wordpress/wp-content/uploads
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/wp-config.php -O /var/www/html/wordpress/wp-config.php
