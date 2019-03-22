@@ -21,7 +21,7 @@ sudo -i
 ```
 
 ```
-curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/captiveportal.sh | sudo bash $0
+curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/captiveportal_wp.sh | sudo bash $0
 ```
 
 #### To Do
