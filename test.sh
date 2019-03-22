@@ -10,7 +10,7 @@ fi
 
 cd /var/www/html
 curl -O https://wordpress.org/latest.tar.gz
-tar xzf latest.tar.gz
+#tar xzf latest.tar.gz
 #rm -rf latest.tar.gz
 #chown -R www-data /var/www/html/wordpress
 #mv wp-config-sample.php wp-config.php
