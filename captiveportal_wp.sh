@@ -95,7 +95,8 @@ apt-get -y install iptables-persistent
 echo "┌─────────────────────────────────────────"
 echo "|configuring hostapd to start at boot"
 echo "└─────────────────────────────────────────"
-update-rc.d hostapd defaults
+systemctl unmask hostapd.service
+systemctl enable hostapd.service
 
 echo "┌─────────────────────────────────────────"
 echo "|After the next step is complete,"
