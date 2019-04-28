@@ -1,6 +1,6 @@
 server {
         listen 80 default_server;
-        server_name  hotspot.localnet;
+        # server_name  hotspot.localnet;
         root /var/www/html/wordpress;
         
         # Only allow GET, HEAD, POST https://www.tenable.com/plugins/nessus/43111
