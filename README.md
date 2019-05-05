@@ -60,4 +60,9 @@ nano /var/www/wordpress/wp-config.php
 edit salts and DB details and add define('FS_METHOD', 'direct');
 ```
 
-Part 1 - Installing Captive Portal
+Part 2 - Installing Captive Portal
+
+
+
+
+
