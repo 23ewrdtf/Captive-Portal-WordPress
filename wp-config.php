@@ -20,13 +20,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wordpress_db' );
+define( 'DB_NAME', 'wordpress' );
 
 /** MySQL database username */
-define( 'DB_USER', 'wordpress_user' );
+define( 'DB_USER', 'wordpress' );
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'Ch4ng3M3' );
+define( 'DB_PASSWORD', 'Pa55w04d123' );
 
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );
@@ -46,14 +46,14 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'aJwE6o]AX0s(kB|V)#_f{Gfd~K!|IP[FtX!wkq3y$t[jweXIus]9/L:$e#RSXw~h');
-define('SECURE_AUTH_KEY',  '0Q VAHJG&xm{nuR|cTY$@) rs>+A8@F$h(S.|]4-#xv_c[#;95Y!i}9`CVaG;dJ:');
-define('LOGGED_IN_KEY',    'G16d{|+ar)M+i&Gl]0OPbEa>C-R*K+/8,:b|+3S|z3;hvod];-Q3%U35KpqG%ICQ');
-define('NONCE_KEY',        '~W.]Tr)H+j?6qiT8RhXM1AAs_mf`n&w@$6R38,y*^(uVjf*g4pRNabB-_KYn12Kv');
-define('AUTH_SALT',        ';1+n-UzuPH1F6.<L`B%+ ?aBw@P}8Um1Qiic7B,PJyz&=A{L`R1:M-x-/m]t._FE');
-define('SECURE_AUTH_SALT', 'R+5-TlyrWpfO$Sg1YNQ?6,Cd^o|/|vdibAAy ]6+1R8 SYvoQZ/,/Hc7{-y=y|P+');
-define('LOGGED_IN_SALT',   '8Y=E11J@ZCr|Na+EG]p1Nl9=bYm`w()hu[a)Qr{OU}IUgn!g,xf~!+x|@-q-E).-');
-define('NONCE_SALT',       '67@B4L.f:4JIqp?[:-m ebO4?bce34{?E3O-[4SA6F]Hz#VqbURYUIzq^htmYv^C');
+define('AUTH_KEY',         'SALT_AUTH_KEY');
+define('SECURE_AUTH_KEY',  'SALT_SECURE_AUTH_KEY');
+define('LOGGED_IN_KEY',    'SALT_LOGGED_IN_KEY');
+define('NONCE_KEY',        'SALT_NONCE_KEY');
+define('AUTH_SALT',        'SALT_AUTH_SALT');
+define('SECURE_AUTH_SALT', 'SALT_SECURE_AUTH_SALT');
+define('LOGGED_IN_SALT',   'SALT_LOGGED_IN_SALT');
+define('NONCE_SALT',       'SALT_NONCE_SALT');
 
 /**#@-*/
 
@@ -83,8 +83,10 @@ define( 'WP_DEBUG', false );
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
-  define( 'ABSPATH', dirname( __FILE__ ) . '/' );
+        define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 }
 
 /** Sets up WordPress vars and included files. */
 require_once( ABSPATH . 'wp-settings.php' );
+
+define('FS_METHOD', 'direct');
