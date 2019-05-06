@@ -40,7 +40,7 @@ echo "|Installing Wordpress"
 echo "└─────────────────────────────────────────"
 curl -o /var/www/latest.tar.gz -O https://wordpress.org/latest.tar.gz
 tar -C /var/www/ -zxvf /var/www/latest.tar.gz
-cp /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/wp-config.php -O /var/www/wordpress/wp-config.php
 chown -R www-data:www-data /var/www/wordpress
 SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
 STRING='put your unique phrase here'
