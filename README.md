@@ -71,12 +71,12 @@ apt-get install dnsmasq -yqq
 echo "┌─────────────────────────────────────────"
 echo "|Configuring wlan0"
 echo "└─────────────────────────────────────────"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dhcpcd.conf -O /etc/dhcpcd.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/dhcpcd.conf -O /etc/dhcpcd.conf
 
 echo "┌─────────────────────────────────────────"
 echo "|Configuring dnsmasq"
 echo "└─────────────────────────────────────────"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
 echo "┌─────────────────────────────────────────"
 echo "|configuring dnsmasq to start at boot"
@@ -91,7 +91,7 @@ apt-get install hostapd -yqq
 echo "┌─────────────────────────────────────────"
 echo "|Configuring hostapd"
 echo "└─────────────────────────────────────────"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
 
 echo "┌─────────────────────────────────────────"
