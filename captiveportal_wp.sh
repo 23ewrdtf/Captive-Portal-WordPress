@@ -42,11 +42,9 @@ curl -o /var/www/latest.tar.gz -O https://wordpress.org/latest.tar.gz
 tar -C /var/www/ -zxvf /var/www/latest.tar.gz
 cp /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
 chown -R www-data:www-data /var/www/wordpress
-
-MANUAL
-curl -s https://api.wordpress.org/secret-key/1.1/salt/
-nano /var/www/wordpress/wp-config.php
-edit salts and DB details and add define('FS_METHOD', 'direct');
+SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
+STRING='put your unique phrase here'
+printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s wp-config.php
 
 echo "┌─────────────────────────────────────────"
 echo "|Installing dnsmasq"
