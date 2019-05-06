@@ -109,12 +109,3 @@ echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo deb
 echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
 apt-get -yqq install iptables-persistent
 ```
-
-Part 3 - Redirect
-
-```
-nginx redirect
-
-```
-
-
