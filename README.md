@@ -14,18 +14,18 @@ sudo -i
 echo "┌─────────────────────────────────────────"
 echo "|Updating repositories"
 echo "└─────────────────────────────────────────"
-apt-get update -y
+apt-get update -yqq
 
 echo "┌─────────────────────────────────────────"
 echo "|Installing Nginx"
 echo "└─────────────────────────────────────────"
-apt install nginx -y
+apt install nginx -yqq
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/default_nginx -O /etc/nginx/sites-enabled/default
 
 echo "┌─────────────────────────────────────────"
 echo "|Installing MySQL"
 echo "└─────────────────────────────────────────"
-apt-get install mysql-server -y
+apt-get install mysql-server -yqq
 mysql_secure_installation <<EOF
 y
 Pa55w04d123
@@ -42,8 +42,8 @@ mysql -e "$dbsetup"
 echo "┌─────────────────────────────────────────"
 echo "|Installing PHP"
 echo "└─────────────────────────────────────────"
-apt install php-fpm php-mysql -y
-apt install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip -y
+apt install php-fpm php-mysql -yqq
+apt install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip -yqq
 systemctl restart php7.0-fpm
 
 echo "┌─────────────────────────────────────────"
@@ -62,7 +62,59 @@ edit salts and DB details and add define('FS_METHOD', 'direct');
 
 Part 2 - Installing Captive Portal
 
+```
+echo "┌─────────────────────────────────────────"
+echo "|Installing dnsmasq"
+echo "└─────────────────────────────────────────"
+apt-get install dnsmasq -yqq
 
+echo "┌─────────────────────────────────────────"
+echo "|Configuring wlan0"
+echo "└─────────────────────────────────────────"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dhcpcd.conf -O /etc/dhcpcd.conf
 
+echo "┌─────────────────────────────────────────"
+echo "|Configuring dnsmasq"
+echo "└─────────────────────────────────────────"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
+
+echo "┌─────────────────────────────────────────"
+echo "|configuring dnsmasq to start at boot"
+echo "└─────────────────────────────────────────"
+update-rc.d dnsmasq defaults
+
+echo "┌─────────────────────────────────────────"
+echo "|Installing hostapd"
+echo "└─────────────────────────────────────────"
+apt-get install hostapd -yqq
+
+echo "┌─────────────────────────────────────────"
+echo "|Configuring hostapd"
+echo "└─────────────────────────────────────────"
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
+sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
+
+echo "┌─────────────────────────────────────────"
+echo "|configuring hostapd to start at boot"
+echo "└─────────────────────────────────────────"
+systemctl unmask hostapd.service
+systemctl enable hostapd.service
+
+echo "┌─────────────────────────────────────────"
+echo "|Configuring iptables"
+echo "└─────────────────────────────────────────"
+iptables -t nat -A PREROUTING -s 192.168.24.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1:80
+iptables -t nat -A POSTROUTING -j MASQUERADE
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+apt-get -yqq install iptables-persistent
+```
+
+Part 3 - Redirect
+
+```
+nginx redirect
+
+```
 
 
