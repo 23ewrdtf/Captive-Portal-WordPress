@@ -1,56 +1,52 @@
 #!/bin/bash
 
-if [ "$EUID" -ne 0 ]
-	then echo "Must be root, run sudo -i before running that script."
-	exit
-fi
-
-echo "┌─────────────────────────────────────────"
-echo "|This script might take a while,"
-echo "|so if you dont see much progress,"
-echo "|wait till you see --all done-- message."
-echo "└─────────────────────────────────────────"
-read -p "Press enter to continue"
-
 echo "┌─────────────────────────────────────────"
 echo "|Updating repositories"
 echo "└─────────────────────────────────────────"
 apt-get update -yqq
 
-# echo "┌─────────────────────────────────────────"
-# echo "|Upgrading packages, this might take a while|"
-# echo "└─────────────────────────────────────────"
-# apt-get upgrade -yqq
-
 echo "┌─────────────────────────────────────────"
-echo "|Installing and configuring nginx"
+echo "|Installing Nginx"
 echo "└─────────────────────────────────────────"
-apt-get install nginx -yqq
+apt install nginx -yqq
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/default_nginx -O /etc/nginx/sites-enabled/default
 
 echo "┌─────────────────────────────────────────"
-echo "|Installing PHP7"
+echo "|Installing MySQL"
 echo "└─────────────────────────────────────────"
-apt-get install php7.0-fpm -yqq
+apt-get install mysql-server -yqq
+mysql_secure_installation <<EOF
+y
+Pa55w04d123
+Pa55w04d123
+y
+y
+y
+y
+EOF
 
-echo "┌─────────────────────────────────────────"
-echo "|Installing and configuring MySQL"
-echo "└─────────────────────────────────────────"
-apt-get install mysql-server php-mysql -yqq
-dbsetup="create database wordpress_db;GRANT ALL PRIVILEGES ON wordpress_db.* TO wordpress_user@$localhost IDENTIFIED BY 'Pa66w0rd123';FLUSH PRIVILEGES;"
+dbsetup="create database wordpress;GRANT ALL PRIVILEGES ON wordpress.* TO wordpress@$localhost IDENTIFIED BY 'Pa55w04d123';FLUSH PRIVILEGES;"
 mysql -e "$dbsetup"
 
 echo "┌─────────────────────────────────────────"
-echo "|Installing and configuring WordPress"
+echo "|Installing PHP"
 echo "└─────────────────────────────────────────"
-curl -o /var/www/html/latest.tar.gz -O https://wordpress.org/latest.tar.gz
-tar -C /var/www/html/ -zxvf /var/www/html/latest.tar.gz
-rm -rf /var/www/html/latest.tar.gz
-chown -R www-data /var/www/html/wordpress
-rm -rf /var/www/html/wordpress/wp-config-sample.php
-mkdir /var/www/html/wordpress/wp-content/uploads
-chmod 775 /var/www/html/wordpress/wp-content/uploads
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/wp-config.php -O /var/www/html/wordpress/wp-config.php
+apt install php-fpm php-mysql -yqq
+apt install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip -yqq
+systemctl restart php7.0-fpm
+
+echo "┌─────────────────────────────────────────"
+echo "|Installing Wordpress"
+echo "└─────────────────────────────────────────"
+curl -o /var/www/latest.tar.gz -O https://wordpress.org/latest.tar.gz
+tar -C /var/www/ -zxvf /var/www/latest.tar.gz
+cp /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
+chown -R www-data:www-data /var/www/wordpress
+
+MANUAL
+curl -s https://api.wordpress.org/secret-key/1.1/salt/
+nano /var/www/wordpress/wp-config.php
+edit salts and DB details and add define('FS_METHOD', 'direct');
 
 echo "┌─────────────────────────────────────────"
 echo "|Installing dnsmasq"
@@ -60,12 +56,12 @@ apt-get install dnsmasq -yqq
 echo "┌─────────────────────────────────────────"
 echo "|Configuring wlan0"
 echo "└─────────────────────────────────────────"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dhcpcd.conf -O /etc/dhcpcd.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/dhcpcd.conf -O /etc/dhcpcd.conf
 
 echo "┌─────────────────────────────────────────"
 echo "|Configuring dnsmasq"
 echo "└─────────────────────────────────────────"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/dnsmasq.conf -O /etc/dnsmasq.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/dnsmasq.conf -O /etc/dnsmasq.conf
 
 echo "┌─────────────────────────────────────────"
 echo "|configuring dnsmasq to start at boot"
@@ -80,17 +76,8 @@ apt-get install hostapd -yqq
 echo "┌─────────────────────────────────────────"
 echo "|Configuring hostapd"
 echo "└─────────────────────────────────────────"
-wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
+wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
-
-echo "┌─────────────────────────────────────────"
-echo "|Configuring iptables"
-echo "└─────────────────────────────────────────"
-iptables -t nat -A PREROUTING -s 192.168.24.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1:80
-iptables -t nat -A POSTROUTING -j MASQUERADE
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
-apt-get -y install iptables-persistent
 
 echo "┌─────────────────────────────────────────"
 echo "|configuring hostapd to start at boot"
@@ -99,7 +86,10 @@ systemctl unmask hostapd.service
 systemctl enable hostapd.service
 
 echo "┌─────────────────────────────────────────"
-echo "|After the next step is complete,"
-echo "|please reboot your pi and test."
+echo "|Configuring iptables"
 echo "└─────────────────────────────────────────"
-read -p "Press enter to install PHP"
+iptables -t nat -A PREROUTING -s 192.168.24.0/24 -p tcp --dport 80 -j DNAT --to-destination 192.168.24.1:80
+iptables -t nat -A POSTROUTING -j MASQUERADE
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+apt-get -yqq install iptables-persistent
