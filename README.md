@@ -1,6 +1,6 @@
-## Captive Portal on Rapsberry Pi with WordPress [DRAFT, DO NOT USE]. It works if run each command manually.
+## Captive Portal on Rapsberry Pi with WordPress.
 
-## Replace Passwords with your own including SALTS and wp-config.php
+## Replace ALL Passwords with your own.
 
 Image: 2019-04-08-raspbian-stretch-lite.zip
 
