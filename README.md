@@ -38,7 +38,7 @@ Disable ssh access on wifi interface
 
 Test popup on other devices. Already works on Samsung S4, S7, S9, IPhone X and Blackberry
 
-Add wifi name to be configured from the command line
+Add wifi name, passwords and WP database to be configured from the command line
 
 #### Tested
 
