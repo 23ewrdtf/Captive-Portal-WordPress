@@ -1,4 +1,4 @@
-## Captive Portal on Rapsberry Pi with WordPress. After reboot and connecting to the wifi you will be presented with Worpdress installation screen.
+## Captive Portal on Rapsberry Pi with WordPress. After reboot and connecting to the wifi you will be presented with Wordpress installation screen.
 
 ## Replace ALL Passwords with your own.
 
