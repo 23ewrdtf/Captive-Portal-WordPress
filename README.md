@@ -40,6 +40,8 @@ Test popup on other devices. Already works on Samsung S4, S7, S9, IPhone X and B
 
 Add wifi name, passwords and WP database to be configured from the command line
 
+Nginx security
+
 #### Tested
 
 Tested on most modern devices.
