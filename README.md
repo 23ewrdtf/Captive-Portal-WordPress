@@ -32,6 +32,14 @@ curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos5
 
 Install https://wp-cli.org/
 
+```
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+php wp-cli.phar --info
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+```
+
+
 Automatically set the location as new RPI hardware requires that before enabling wifi
 
 Add a time limit for each client. Disconnect client after 10minutes.
