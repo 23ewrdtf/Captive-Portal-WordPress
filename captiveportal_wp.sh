@@ -31,8 +31,8 @@ mysql -e "$dbsetup"
 echo "┌─────────────────────────────────────────"
 echo "|Installing PHP"
 echo "└─────────────────────────────────────────"
-apt install php-fpm php-mysql -yqq > /dev/null
-apt install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip -yqq > /dev/null
+apt-get install php-fpm php-mysql -yqq > /dev/null
+apt-get install php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip -yqq > /dev/null
 systemctl restart php7.0-fpm
 
 echo "┌─────────────────────────────────────────"
