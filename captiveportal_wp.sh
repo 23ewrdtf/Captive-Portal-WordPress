@@ -44,7 +44,7 @@ wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/mast
 chown -R www-data:www-data /var/www/wordpress
 SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
 STRING='put your unique phrase here'
-printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s wp-config.php
+printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s /var/www/wordpress/wp-config.php
 
 echo "┌─────────────────────────────────────────"
 echo "|Installing dnsmasq"
