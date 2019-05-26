@@ -28,6 +28,11 @@ sudo -i
 curl -H 'Cache-Control: no-cache' -sSL https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/captiveportal_wp.sh | sudo bash $0
 ```
 
+#### Issues
+
+If you get `nginx 502 bad gateway` error, check /var/log/nginx/error.log.
+If the message is `to unix:/run/php/php7.0-fpm.sock failed (2: No such file or directory)` go to /run/php/, check if php7.0-fpm.sock exists, if the filename is different, update line 42 in /etc/nginx/sites-enabled/default and reboot.
+
 #### To Do
 
 Install https://wp-cli.org/
