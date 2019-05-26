@@ -8,7 +8,7 @@ apt-get update -yqq > /dev/null
 echo "┌─────────────────────────────────────────"
 echo "|Installing Nginx"
 echo "└─────────────────────────────────────────"
-apt install nginx -yqq > /dev/null
+apt-get install nginx -yqq > /dev/null
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal-WordPress/master/default_nginx -O /etc/nginx/sites-enabled/default
 
 echo "┌─────────────────────────────────────────"
@@ -25,7 +25,7 @@ y
 y
 EOF
 
-dbsetup="create database wordpress;GRANT ALL PRIVILEGES ON wordpress.* TO wordpress@$localhost IDENTIFIED BY 'Pa55w04d123';FLUSH PRIVILEGES;"
+dbsetup="create database wordpress;GRANT ALL PRIVILEGES ON wordpress.* TO wordpress@$localhost IDENTIFIED BY 'Pa55w04d123$';FLUSH PRIVILEGES;"
 mysql -e "$dbsetup"
 
 echo "┌─────────────────────────────────────────"
