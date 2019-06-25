@@ -89,6 +89,20 @@ Install and capture traffic using `tcpdump -i wlan0 -w filename.pcap`
 Check nginx logs
 
 
+#### Other
+
+Find out which MAC addresses connected to the portal by finding all MAC addresses from the logs. Meantime solution untill I specify proper logs.
+
+```
+# Go to /var/logs/
+cd /var/logs/
+
+# Find all gz files and extract them
+find . -name '*.gz' -execdir gunzip '{}' \;
+
+# Find MAC addresses in all files and dont show duplicates and other stuff
+grep -hoiIs '[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}' * | sort -u
+```
 
 
 
