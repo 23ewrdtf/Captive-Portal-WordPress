@@ -3,6 +3,7 @@ server {
         root /var/www/wordpress;
         index index.php index.html index.htm index.nginx-debian.html;
         server_name hotspot.local;
+	client_max_body_size 50M;
 		
 #
 # Redirect Sections
