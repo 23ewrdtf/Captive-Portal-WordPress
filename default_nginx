@@ -29,6 +29,11 @@ server {
                 return 302 http://hotspot.localnet;
         }
 
+# For iOS to redirect requests for /hotspot-detect.html to open the captive portal screen
+        location /hotspot-detect.html {
+                return 302 http://hotspot.localnet;
+        }
+
 # For iOS
        if ($http_user_agent ~* (CaptiveNetworkSupport) ) {
         return 302 http://hotspot.localnet;
