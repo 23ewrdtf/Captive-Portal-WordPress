@@ -1,9 +1,16 @@
 #!/bin/bash
 
+:<<"USAGE"
+$0 Filename captiveportal.sh
+$1 SSID
+USAGE
+
 if [ "$EUID" -ne 0 ]
 	then echo "Must be root, run sudo -i before running that script."
 	exit
 fi
+
+SSID=${1:-CaptivePortal01}
 
 echo "┌─────────────────────────────────────────"
 echo "|This script might take a while,"
@@ -58,6 +65,7 @@ echo "|Configuring hostapd"
 echo "└─────────────────────────────────────────"
 wget -q https://raw.githubusercontent.com/tretos53/Captive-Portal/master/hostapd.conf -O /etc/hostapd/hostapd.conf
 sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
+sed -i -- "s/CaptivePortal01/${SSID}/g" /etc/hostapd/hostapd.conf
 
 echo "┌─────────────────────────────────────────"
 echo "|Configuring iptables"
